@@ -1,9 +1,16 @@
-package cml.theaters.moviereservation.domain;
+package cml.theaters.moviereservation.domain.member;
+
+import cml.theaters.moviereservation.domain.Reservation;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
 @Entity
 public class Member {
 
@@ -18,7 +25,7 @@ public class Member {
 
     private String password;
 
-    private String birthday;
+    private LocalDateTime birthday;
 
     private String telNumber;
 

@@ -8,7 +8,7 @@ public abstract class Seat {
 
     @Id @GeneratedValue
     @Column(name = "SEAT_ID")
-    private long seatId;
+    private Long seatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "THEATER_ID")
