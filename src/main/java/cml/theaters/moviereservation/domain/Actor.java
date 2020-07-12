@@ -12,7 +12,7 @@ public class Actor {
 
     private String castName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_CODE")
     private Movie movie;
 }

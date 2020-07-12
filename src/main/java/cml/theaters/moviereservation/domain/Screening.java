@@ -10,7 +10,7 @@ public class Screening {
     @Column(name = "SCREENING_ID")
     private Long screenningId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_CODE")
     private Movie movie;
 
