@@ -28,10 +28,9 @@ public class MemberServiceTests {
                 .telNumber(telNumber)
                 .build();
 
-
         Member savedMember = memberRepository.save(member);
 
-        Assertions.assertEquals(savedMember.getName(), "membertest");
-        Assertions.assertEquals(savedMember.getEmail(), "membertest@membertest.com");
+        Assertions.assertEquals(savedMember.getName(), name);
+        Assertions.assertEquals(savedMember.getEmail(), email);
     }
 }
