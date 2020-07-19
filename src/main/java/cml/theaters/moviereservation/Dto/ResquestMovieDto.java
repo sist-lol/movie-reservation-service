@@ -1,33 +1,34 @@
-package cml.theaters.moviereservation.domain;
+package cml.theaters.moviereservation.Dto;
+
+import com.sun.istack.NotNull;
+import lombok.*;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity
-public class Movie {
-
+@Getter@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResquestMovieDto {
     @Id
     @Column(name = "MOVIE_CODE")
     private String movieCode;
-
+    @NotNull
     private String movieName;
-
+    @NotNull
     private int runningTime;
 
     private LocalDate openDate;
-
+    @NotNull
+    private String image;
+    @NotNull
     private String nationName;
-
+    @NotNull
     private String directorName;
-
-    @OneToMany(mappedBy = "movie")
-    private List<Actor> actors = new ArrayList<>();
-
+    @NotNull
+    private String actors;
+    @NotNull
     private String watchGrade;
 }

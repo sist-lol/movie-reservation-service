@@ -10,12 +10,9 @@ public class Multiplex {
     @Column(name = "MULTIPLEX_ID")
     private Long multiplexId;
 
-    private String theaterName;
+    @Column(unique = true)
+    private String multiplexName;
 
     private String city;
-
-    @OneToMany
-    @JoinColumn(name = "THEATER_ID")
-    private List<Theater> theaters;
 
 }
