@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.time.Duration;
 import java.time.LocalDate;
 
 @Getter
@@ -19,7 +20,7 @@ public class ResponseMovieDto {
     @NotNull
     private String movieName;
     @NotNull
-    private int runningTime;
+    private Duration runningTime;
 
     private LocalDate openDate;
     @NotNull

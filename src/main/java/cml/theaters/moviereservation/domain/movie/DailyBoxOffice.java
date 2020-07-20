@@ -1,15 +1,20 @@
 package cml.theaters.moviereservation.domain.movie;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Entity
+@Getter
+@Builder
+@AllArgsConstructor @NoArgsConstructor
 public class DailyBoxOffice {
 
-    @Id @GeneratedValue
-    private long dailyBoxOfficeId;
-
-    private String boxOfficeDate;
-
-    private int rank;
+    @EmbeddedId
+    private DailyBoxOfficePrimayKey dailyBoxOfficeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_CODE")

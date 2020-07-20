@@ -13,18 +13,22 @@ import java.time.LocalDate;
 @Entity
 @Getter @EqualsAndHashCode(of = "movieCode")
 @Builder @AllArgsConstructor @NoArgsConstructor
-@DynamicUpdate
 public class Movie {
 
     @Id
     @Column(name = "MOVIE_CODE")
     private String movieCode;
+    @Setter
     private String movieName;
+    @Setter
     private Duration runningTime;
+    @Setter
     private LocalDate openDate;
+    @Setter
     private String image;
     private String nationName;
     private String directorName;
+    @Setter
     private String actors;
     private String watchGrade;
 

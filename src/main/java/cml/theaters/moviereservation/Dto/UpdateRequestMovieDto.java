@@ -1,26 +1,18 @@
 package cml.theaters.moviereservation.Dto;
 
 import com.sun.istack.NotNull;
-import lombok.*;
+import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.time.Duration;
 import java.time.LocalDate;
 
-@Getter@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResquestMovieDto {
-    @Id
-    @Column(name = "MOVIE_CODE")
-    private String movieCode;
+@Data
+public class UpdateRequestMovieDto {
     @NotNull
     private String movieName;
     @NotNull
     private Duration runningTime;
-
+    @NotNull
     private LocalDate openDate;
     @NotNull
     private String image;
@@ -32,4 +24,6 @@ public class ResquestMovieDto {
     private String actors;
     @NotNull
     private String watchGrade;
+
+
 }

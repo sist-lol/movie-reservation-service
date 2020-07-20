@@ -2,6 +2,7 @@ package cml.theaters.moviereservation.controller;
 
 import cml.theaters.moviereservation.Dto.ResponseMovieDto;
 import cml.theaters.moviereservation.Dto.ResquestMovieDto;
+import cml.theaters.moviereservation.Dto.UpdateRequestMovieDto;
 import cml.theaters.moviereservation.domain.movie.Movie;
 import cml.theaters.moviereservation.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,12 @@ public class MovieController {
     private final ModelMapper modelMapper;
 
     /**
-     * 영화목록 검색
+     * 영화이름 검색
      * @param movieName
      * @return responseMovieList , statuscode
      * @throws Exception
      */
-    @GetMapping(value = "api/v1/movies/{movieName}")
+    @GetMapping(value = "api/v1/movie/{movieName}")
     public ResponseEntity searchMovie(@PathVariable String movieName)  {
         List<Movie> moiveList = movieService.searchMovies(movieName);
         List<ResponseMovieDto> responseMovieList = null;
@@ -48,7 +49,7 @@ public class MovieController {
     }
 
     /**
-     *
+     * 영화 저장
      * @param requestMovieDto
      * @return
      */
@@ -56,7 +57,17 @@ public class MovieController {
     public ResponseEntity saveMovie(@RequestBody @Valid ResquestMovieDto requestMovieDto) {
         Movie movie = modelMapper.map(requestMovieDto, Movie.class);
         String createdMovieCd = movieService.saveMovie(movie);
-        return new ResponseEntity(createdMovieCd, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    /**
+     * 영화 수정
+     * @param movieCode
+     * @param requestMovieDto
+     */
+    @PutMapping(value = "api/v1/movie/{movieCd}")
+    public void updateMoive (@PathVariable String movieCode, @RequestBody @Valid UpdateRequestMovieDto requestMovieDto) {
+        movieService.updateMovie(movieCode,requestMovieDto);
     }
 
 
