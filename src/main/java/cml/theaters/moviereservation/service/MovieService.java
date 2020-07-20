@@ -1,12 +1,15 @@
 package cml.theaters.moviereservation.service;
 
 import cml.theaters.moviereservation.Dto.UpdateRequestMovieDto;
+import cml.theaters.moviereservation.domain.movie.DailyBoxOffice;
+import cml.theaters.moviereservation.domain.movie.DailyBoxOfficeRepository;
 import cml.theaters.moviereservation.domain.movie.Movie;
 import cml.theaters.moviereservation.domain.movie.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +20,7 @@ import java.util.Optional;
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final DailyBoxOfficeRepository dailyBoxOfficeRepository;
 //    private final MovieApiConnection movieApiConnection;
 
     @Transactional()
@@ -53,5 +57,10 @@ public class MovieService {
         movie.setRunningTime(updateRequestMovieDto.getRunningTime());
 
         return movie;
+    }
+
+    public List<DailyBoxOffice> dailyBoxOffices(String date){
+        return dailyBoxOfficeRepository.findByDailyBoxOffice(date)
+                .orElse(Collections.emptyList());
     }
 }

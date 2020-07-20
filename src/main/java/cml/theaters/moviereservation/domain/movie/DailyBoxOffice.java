@@ -13,8 +13,13 @@ import javax.persistence.*;
 @AllArgsConstructor @NoArgsConstructor
 public class DailyBoxOffice {
 
-    @EmbeddedId
-    private DailyBoxOfficePrimayKey dailyBoxOfficeId;
+    @Id @GeneratedValue
+    @Column(name = "DAILY_BOXOFFICE_ID")
+    private long id;
+
+    private String date;
+
+    private int movieRank;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_CODE")

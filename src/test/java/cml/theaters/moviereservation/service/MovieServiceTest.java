@@ -1,6 +1,8 @@
 package cml.theaters.moviereservation.service;
 
 import cml.theaters.moviereservation.Dto.UpdateRequestMovieDto;
+import cml.theaters.moviereservation.domain.movie.DailyBoxOffice;
+import cml.theaters.moviereservation.domain.movie.DailyBoxOfficeRepository;
 import cml.theaters.moviereservation.domain.movie.Movie;
 import cml.theaters.moviereservation.domain.movie.MovieRepository;
 import jdk.jfr.Description;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,20 +26,24 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
 public class MovieServiceTest {
 
+    MovieService movieService;
+
     @Mock
     MovieRepository movieRepository;
 
-    MovieService movieService;
+    @Mock
+    DailyBoxOfficeRepository dailyBoxOfficeRepository;
 
     @BeforeEach
     void setUp() {
-         movieService = new MovieService(movieRepository);
+         movieService = new MovieService(movieRepository,dailyBoxOfficeRepository);
     }
     public Movie generateMovie() {
         Movie movie = Movie.builder()
@@ -127,4 +134,28 @@ public class MovieServiceTest {
         assertEquals(updateMovie.getOpenDate(),updatedMovie.getOpenDate());
     }
 
+    @Test
+    @Description("일일 박스오피스")
+    void movieService_일일박스오피스() {
+        Movie movie = generateMovie();
+
+        DailyBoxOffice dailyBoxOffice = DailyBoxOffice.builder()
+                .date(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .movieRank(1)
+                .movie(movie)
+                .build();
+
+        List<DailyBoxOffice> dailyBoxOfficeList = new ArrayList<>();
+        dailyBoxOfficeList.add(dailyBoxOffice);
+
+        given(dailyBoxOfficeRepository.findByDailyBoxOffice(any())).willReturn(Optional.of(dailyBoxOfficeList));
+
+        List<DailyBoxOffice> resultDailyBoxOffice = movieService.dailyBoxOffices("20200720");
+
+        assertEquals(dailyBoxOfficeList.size(),resultDailyBoxOffice.size());
+        assertEquals(dailyBoxOfficeList.get(0).getMovieRank(),resultDailyBoxOffice.get(0).getMovieRank());
+        assertEquals(dailyBoxOfficeList.get(0).getMovie().getMovieName(),resultDailyBoxOffice.get(0).getMovie().getMovieName());
+        assertEquals(dailyBoxOfficeList.get(0).getDate(),resultDailyBoxOffice.get(0).getDate());
+
+    }
 }
