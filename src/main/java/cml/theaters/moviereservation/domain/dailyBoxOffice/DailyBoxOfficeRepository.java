@@ -1,4 +1,4 @@
-package cml.theaters.moviereservation.domain.movie;
+package cml.theaters.moviereservation.domain.dailyBoxOffice;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

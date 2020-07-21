@@ -1,15 +1,12 @@
 package cml.theaters.moviereservation.service;
 
-import cml.theaters.moviereservation.Dto.UpdateRequestMovieDto;
-import cml.theaters.moviereservation.domain.movie.DailyBoxOffice;
-import cml.theaters.moviereservation.domain.movie.DailyBoxOfficeRepository;
+import cml.theaters.moviereservation.dto.movie.UpdateRequestMovieDto;
 import cml.theaters.moviereservation.domain.movie.Movie;
 import cml.theaters.moviereservation.domain.movie.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +17,6 @@ import java.util.Optional;
 public class MovieService {
 
     private final MovieRepository movieRepository;
-    private final DailyBoxOfficeRepository dailyBoxOfficeRepository;
 //    private final MovieApiConnection movieApiConnection;
 
     @Transactional()
@@ -29,8 +25,8 @@ public class MovieService {
         if(findMovie.isPresent()) {
             throw new RuntimeException("해당" + movie.getMovieCode() + "에 대한 영화가 이미 존재합니다.");
         }
-        Movie createdMovie = movieRepository.save(movie);
-        return createdMovie.getMovieCode();
+        Movie savedMovie = movieRepository.save(movie);
+        return savedMovie.getMovieCode();
     }
 
 
@@ -59,8 +55,4 @@ public class MovieService {
         return movie;
     }
 
-    public List<DailyBoxOffice> dailyBoxOffices(String date){
-        return dailyBoxOfficeRepository.findByDailyBoxOffice(date)
-                .orElse(Collections.emptyList());
-    }
 }

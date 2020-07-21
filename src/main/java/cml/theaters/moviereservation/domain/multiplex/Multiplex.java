@@ -1,9 +1,14 @@
-package cml.theaters.moviereservation.domain;
+package cml.theaters.moviereservation.domain.multiplex;
+
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter @Builder  @EqualsAndHashCode(of = "multiplexId")
+@AllArgsConstructor @NoArgsConstructor
+
 public class Multiplex {
 
     @Id @GeneratedValue

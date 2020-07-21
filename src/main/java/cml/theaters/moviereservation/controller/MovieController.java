@@ -1,22 +1,17 @@
 package cml.theaters.moviereservation.controller;
 
-import cml.theaters.moviereservation.Dto.ResponseBoxOfficeDto;
-import cml.theaters.moviereservation.Dto.ResponseMovieDto;
-import cml.theaters.moviereservation.Dto.ResquestMovieDto;
-import cml.theaters.moviereservation.Dto.UpdateRequestMovieDto;
-import cml.theaters.moviereservation.domain.movie.DailyBoxOffice;
+import cml.theaters.moviereservation.dto.movie.ResponseMovieDto;
+import cml.theaters.moviereservation.dto.movie.ResquestMovieDto;
+import cml.theaters.moviereservation.dto.movie.UpdateRequestMovieDto;
 import cml.theaters.moviereservation.domain.movie.Movie;
 import cml.theaters.moviereservation.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +42,7 @@ public class MovieController {
      * 영화 상세정보 검색
      *
      * @param movieCode
-     * @return
+     * @return responseMovieDto , statuscode
      */
     @GetMapping(value = "/api/v1/movie/{movieCode}")
     public ResponseEntity<?> searchMovieInfo(@PathVariable String movieCode) {
@@ -60,20 +55,20 @@ public class MovieController {
      * 영화 저장
      *
      * @param requestMovieDto
-     * @return
+     * @return savedMovieCd , statuscode
      */
     @PostMapping(value = "/api/v1/movie")
     public ResponseEntity<?> saveMovie(@RequestBody @Valid ResquestMovieDto requestMovieDto) {
         Movie movie = modelMapper.map(requestMovieDto, Movie.class);
-        String createdMovieCd = movieService.saveMovie(movie);
-        return ResponseEntity.status(HttpStatus.OK).body(createdMovieCd);
+        String savedMovieCd = movieService.saveMovie(movie);
+        return ResponseEntity.status(HttpStatus.OK).body(savedMovieCd);
     }
 
     /**
      * 영화 수정
      *
      * @param movieCode
-     * @param requestMovieDto
+     * @param requestMovieDto , statuscode
      */
     @PutMapping(value = "/api/v1/movie/{movieCd}")
     public ResponseEntity<?>  updateMoive(@PathVariable String movieCode, @RequestBody @Valid UpdateRequestMovieDto requestMovieDto) {
@@ -81,14 +76,7 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.OK).body(movie.getMovieCode());
     }
 
-    @GetMapping(value = "/api/v1/movie/dailyBoxOffice/{date}")
-    public ResponseEntity<?> dailyBoxOffice(@PathVariable String date) {
-        List<DailyBoxOffice> dailyBoxOffice = movieService.dailyBoxOffices(date);
-        List<ResponseBoxOfficeDto> dailyBoxOffices = dailyBoxOffice.stream()
-                .map(boxOffice -> modelMapper.map(boxOffice, ResponseBoxOfficeDto.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body(dailyBoxOffices);
-    }
+
 
 
 }

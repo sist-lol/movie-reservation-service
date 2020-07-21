@@ -1,6 +1,6 @@
 package cml.theaters.moviereservation;
 
-import cml.theaters.moviereservation.domain.movie.DailyBoxOffice;
+import cml.theaters.moviereservation.domain.dailyBoxOffice.DailyBoxOffice;
 import cml.theaters.moviereservation.domain.movie.Movie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

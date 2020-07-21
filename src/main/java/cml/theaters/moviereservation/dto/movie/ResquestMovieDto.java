@@ -1,6 +1,5 @@
-package cml.theaters.moviereservation.Dto;
+package cml.theaters.moviereservation.dto.movie;
 
-import cml.theaters.moviereservation.domain.movie.Movie;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -9,11 +8,11 @@ import javax.persistence.Id;
 import java.time.Duration;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Getter@Setter
 @Builder
-@AllArgsConstructor @NoArgsConstructor
-public class ResponseMovieDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResquestMovieDto {
     @Id
     @Column(name = "MOVIE_CODE")
     private String movieCode;
@@ -33,6 +32,4 @@ public class ResponseMovieDto {
     private String actors;
     @NotNull
     private String watchGrade;
-
-
 }

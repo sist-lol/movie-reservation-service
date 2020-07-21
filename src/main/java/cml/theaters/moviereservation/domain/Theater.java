@@ -1,5 +1,6 @@
 package cml.theaters.moviereservation.domain;
 
+import cml.theaters.moviereservation.domain.multiplex.Multiplex;
 import cml.theaters.moviereservation.domain.seat.Seat;
 
 import javax.persistence.*;

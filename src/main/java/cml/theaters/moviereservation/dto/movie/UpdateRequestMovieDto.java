@@ -1,4 +1,4 @@
-package cml.theaters.moviereservation.Dto;
+package cml.theaters.moviereservation.dto.movie;
 
 import com.sun.istack.NotNull;
 import lombok.Data;

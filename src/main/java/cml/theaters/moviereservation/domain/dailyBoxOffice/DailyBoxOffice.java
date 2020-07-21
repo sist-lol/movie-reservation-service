@@ -1,5 +1,6 @@
-package cml.theaters.moviereservation.domain.movie;
+package cml.theaters.moviereservation.domain.dailyBoxOffice;
 
+import cml.theaters.moviereservation.domain.movie.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

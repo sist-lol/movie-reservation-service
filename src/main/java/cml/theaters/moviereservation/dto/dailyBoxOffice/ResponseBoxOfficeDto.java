@@ -1,4 +1,4 @@
-package cml.theaters.moviereservation.Dto;
+package cml.theaters.moviereservation.dto.dailyBoxOffice;
 
 import cml.theaters.moviereservation.domain.movie.Movie;
 import lombok.Data;
