@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -24,12 +25,10 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public Long save(MemberSignUpRequestDto requestDto) {
         return memberRepository.save(requestDto.toEntity()).getMemberId();
     }
 
-    @Transactional
     public void delete(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id = " + id));
