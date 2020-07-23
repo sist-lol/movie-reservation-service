@@ -1,7 +1,11 @@
 package cml.theaters.moviereservation.domain;
 
+import cml.theaters.moviereservation.domain.movie.Movie;
+
 import javax.persistence.*;
 import java.util.List;
+
+import static javax.persistence.FetchType.*;
 
 @Entity
 public class Screening {
@@ -10,11 +14,13 @@ public class Screening {
     @Column(name = "SCREENING_ID")
     private Long screenningId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "MOVIE_CODE")
     private Movie movie;
 
-    @OneToMany
-    @JoinColumn(name = "MULTIPLEX_ID")
-    private List<Multiplex> multiplexes;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "THEATER_ID")
+    private Theater theater;
+
+
 }
