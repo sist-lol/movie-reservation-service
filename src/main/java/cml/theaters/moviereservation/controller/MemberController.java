@@ -4,10 +4,7 @@ import cml.theaters.moviereservation.dto.MemberListResponseDto;
 import cml.theaters.moviereservation.dto.MemberSignUpRequestDto;
 import cml.theaters.moviereservation.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,11 @@ public class MemberController {
     @PostMapping("/member")
     public Long save(@RequestBody MemberSignUpRequestDto requestDto) {
         return memberService.save(requestDto);
+    }
+
+    @DeleteMapping("/member/{memberId}")
+    public Long deleteById(@PathVariable Long memberId) {
+        memberService.delete(memberId);
+        return memberId;
     }
 }

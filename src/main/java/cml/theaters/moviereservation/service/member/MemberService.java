@@ -29,10 +29,10 @@ public class MemberService {
         return memberRepository.save(requestDto.toEntity()).getMemberId();
     }
 
-    public void delete(Long id) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id = " + id));
+    public void delete(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id = " + memberId));
 
-        memberRepository.deleteById(id);
+        memberRepository.delete(member);
     }
 }
