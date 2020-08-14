@@ -15,7 +15,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/member")
-    public List<MemberListResponseDto> memberList() {
+    public List<MemberListResponseDto> findAll() {
         return memberService.findAll();
     }
 
