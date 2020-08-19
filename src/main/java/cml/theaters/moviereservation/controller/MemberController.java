@@ -1,6 +1,7 @@
 package cml.theaters.moviereservation.controller;
 
 import cml.theaters.moviereservation.dto.MemberListResponseDto;
+import cml.theaters.moviereservation.dto.MemberResponseDto;
 import cml.theaters.moviereservation.dto.MemberSignUpRequestDto;
 import cml.theaters.moviereservation.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,13 @@ public class MemberController {
         return memberService.findAll();
     }
 
+    @GetMapping("/member/{memberId}")
+    public MemberResponseDto findByMemberId(@PathVariable Long memberId) {
+        return memberService.findById(memberId);
+    }
+
     @PostMapping("/member")
-    public Long save(@RequestBody MemberSignUpRequestDto requestDto) {
+    public MemberResponseDto save(@RequestBody MemberSignUpRequestDto requestDto) {
         return memberService.save(requestDto);
     }
 

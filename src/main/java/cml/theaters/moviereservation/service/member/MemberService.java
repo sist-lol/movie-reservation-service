@@ -3,6 +3,7 @@ package cml.theaters.moviereservation.service.member;
 import cml.theaters.moviereservation.domain.member.Member;
 import cml.theaters.moviereservation.domain.member.MemberRepository;
 import cml.theaters.moviereservation.dto.MemberListResponseDto;
+import cml.theaters.moviereservation.dto.MemberResponseDto;
 import cml.theaters.moviereservation.dto.MemberSignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,14 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    public Long save(MemberSignUpRequestDto requestDto) {
-        return memberRepository.save(requestDto.toEntity()).getMemberId();
+    @Transactional(readOnly = true)
+    public MemberResponseDto findById(Long memberId) {
+        return new MemberResponseDto(memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id = " + memberId)));
+    }
+
+    public MemberResponseDto save(MemberSignUpRequestDto requestDto) {
+        return new MemberResponseDto(memberRepository.save(requestDto.toEntity()));
     }
 
     public void delete(Long memberId) {
