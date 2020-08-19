@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     @Column(unique = true, nullable = false)
     private String telNumber;
@@ -38,7 +38,7 @@ public class Member {
 
     @Builder
     public Member(String name, String email, String password,
-                  LocalDateTime birthday, String telNumber) {
+                  LocalDate birthday, String telNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
