@@ -6,14 +6,14 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class MemberListResponseDto {
+public class MemberResponseDto {
     private Long memberId;
     private String name;
     private String email;
     private LocalDate birthday;
     private String telNumber;
 
-    public MemberListResponseDto(Member memberEntity) {
+    public MemberResponseDto(Member memberEntity) {
         this.memberId = memberEntity.getMemberId();
         this.name = memberEntity.getName();
         this.email = memberEntity.getEmail();
