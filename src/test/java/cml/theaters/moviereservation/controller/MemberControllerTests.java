@@ -2,13 +2,17 @@ package cml.theaters.moviereservation.controller;
 
 import cml.theaters.moviereservation.domain.member.Member;
 import cml.theaters.moviereservation.dto.MemberListResponseDto;
+import cml.theaters.moviereservation.dto.MemberResponseDto;
+import cml.theaters.moviereservation.dto.MemberSignUpRequestDto;
 import cml.theaters.moviereservation.service.member.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,6 +43,24 @@ public class MemberControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/member"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is(member.getName())))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void save_test() throws Exception {
+        MemberSignUpRequestDto dto = MemberSignUpRequestDto.builder()
+                .name("savetest")
+                .email("save@save.com")
+                .password("savetest")
+                .telNumber("000-0000-0000")
+                .build();
+
+        BDDMockito.given(memberService.save(dto)).willReturn(new MemberResponseDto(dto.toEntity()));
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/member")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8").content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 }
