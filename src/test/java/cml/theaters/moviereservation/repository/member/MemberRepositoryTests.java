@@ -1,4 +1,4 @@
-package cml.theaters.moviereservation.service.member;
+package cml.theaters.moviereservation.repository.member;
 
 import cml.theaters.moviereservation.domain.member.Member;
 import cml.theaters.moviereservation.domain.member.MemberRepository;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,27 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class MemberServiceTests {
+public class MemberRepositoryTests {
 
     @Autowired
     private MemberRepository memberRepository;
-
-    @BeforeEach
-    public void startUp() {
-        String name = "inittest";
-        String email = "inittest@inittest.com";
-        String password = "inittest";
-        String telNumber = "000-0000-0000";
-
-        Map<String, String> memberParams = new HashMap<>();
-        memberParams.put("name", name);
-        memberParams.put("email", email);
-        memberParams.put("password", password);
-        memberParams.put("telNumber", telNumber);
-
-        Member member = createMemberEntity(memberParams);
-        memberRepository.save(member);
-    }
 
     @AfterEach
     public void teardown() {
@@ -48,13 +32,20 @@ public class MemberServiceTests {
 
     @Test
     public void member_findAll_test() {
+        String name = "savetest";
+        String email = "savetest@savetest.com";
+        String password = "savetest";
+        String telNumber = "000-0000-0001";
+
+        Member member = createMemberEntity(name, email, password, telNumber);
+
+        memberRepository.save(member);
+
         List<Member> memberList = memberRepository.findAll();
         assertNotNull(memberList);
         assertNotSame(0, memberList.size());
 
-        for (Member member : memberList) {
-            System.out.println(member.toString());
-        }
+        System.out.println(member.toString());
     }
 
     @Test
@@ -78,6 +69,7 @@ public class MemberServiceTests {
         assertEquals(savedMember.getEmail(), email);
     }
 
+    @Transactional
     @Test
     public void member_update_test() {
         String name = "updatetest_before";
@@ -89,15 +81,17 @@ public class MemberServiceTests {
 
         System.out.println(member.toString());
 
+        Member savedMember = memberRepository.save(member);
+
         name = "updatetest_after";
         password = "updatetest_after";
         telNumber = "999-9999-9999";
 
-        member.setName(name);
-        member.setPassword(password);
-        member.setTelNumber(telNumber);
+        savedMember.setName(name);
+        savedMember.setPassword(password);
+        savedMember.setTelNumber(telNumber);
 
-        memberRepository.saveAndFlush(member);
+        memberRepository.save(savedMember);
 
         Member updatedMember = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException());
 
