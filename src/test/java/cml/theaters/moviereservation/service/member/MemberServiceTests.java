@@ -79,6 +79,37 @@ public class MemberServiceTests {
     }
 
     @Test
+    public void member_update_test() {
+        String name = "updatetest_before";
+        String email = "updatetest@updatetest.com";
+        String password = "updatetest_before";
+        String telNumber = "000-0000-0000";
+
+        Member member = createMemberEntity(name, email, password, telNumber);
+
+        System.out.println(member.toString());
+
+        name = "updatetest_after";
+        password = "updatetest_after";
+        telNumber = "999-9999-9999";
+
+        member.setName(name);
+        member.setPassword(password);
+        member.setTelNumber(telNumber);
+
+        memberRepository.saveAndFlush(member);
+
+        Member updatedMember = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException());
+
+        System.out.println(updatedMember.toString());
+
+        assertEquals(updatedMember.getName(), name);
+        assertEquals(updatedMember.getPassword(), password);
+        assertEquals(updatedMember.getTelNumber(), telNumber);
+
+    }
+
+    @Test
     public void member_delete_test() {
         Map<String, String> memberParams = new HashMap<>();
         memberParams.put("name", "deletetest");
@@ -89,6 +120,15 @@ public class MemberServiceTests {
         Member member = createMemberEntity(memberParams);
 
         assertDoesNotThrow(() -> memberRepository.delete(member));
+    }
+
+    private Member createMemberEntity(String name, String email, String password, String telNumber) {
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .telNumber(telNumber)
+                .build();
     }
 
     private Member createMemberEntity(Map<String, String> params) {
