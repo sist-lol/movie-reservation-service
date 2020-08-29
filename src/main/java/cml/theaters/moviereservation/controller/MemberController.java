@@ -3,6 +3,7 @@ package cml.theaters.moviereservation.controller;
 import cml.theaters.moviereservation.dto.MemberListResponseDto;
 import cml.theaters.moviereservation.dto.MemberResponseDto;
 import cml.theaters.moviereservation.dto.MemberSignUpRequestDto;
+import cml.theaters.moviereservation.dto.MemberUpdateRequestDto;
 import cml.theaters.moviereservation.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,19 @@ public class MemberController {
         return memberService.findById(memberId);
     }
 
+    @GetMapping("/member/{email}")
+    public MemberResponseDto findByEmail(@PathVariable String email) {
+        return memberService.findByEmail(email);
+    }
+
     @PostMapping("/member")
     public MemberResponseDto save(@RequestBody MemberSignUpRequestDto requestDto) {
         return memberService.save(requestDto);
+    }
+
+    @PutMapping("/member")
+    public MemberResponseDto update(@RequestBody MemberUpdateRequestDto requestDto) {
+        return memberService.update(requestDto);
     }
 
     @DeleteMapping("/member/{memberId}")
