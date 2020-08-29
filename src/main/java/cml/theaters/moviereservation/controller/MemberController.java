@@ -26,11 +26,6 @@ public class MemberController {
         return memberService.findById(memberId);
     }
 
-    @GetMapping("/member/{email}")
-    public MemberResponseDto findByEmail(@PathVariable String email) {
-        return memberService.findByEmail(email);
-    }
-
     @PostMapping("/member")
     public MemberResponseDto save(@RequestBody MemberSignUpRequestDto requestDto) {
         return memberService.save(requestDto);
